@@ -1,0 +1,34 @@
+# Build output
+build/
+target/
+*.war
+*.class
+
+# MySQL connector downloaded locally
+lib/mysql-connector-j-*.jar
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tomcat
+logs/
+work/
+temp/
+
+# Uploaded runtime files
+src/main/webapp/uploads/*
+!src/main/webapp/uploads/.gitkeep
+
+# Environment / secrets
+.env
+*.env
+
+# Java
+hs_err_pid*
+replay_pid*

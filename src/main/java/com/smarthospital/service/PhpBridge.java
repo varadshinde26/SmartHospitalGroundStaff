@@ -1,0 +1,4 @@
+package com.smarthospital.service;
+import java.net.*;import java.io.*;import java.nio.charset.StandardCharsets;
+public final class PhpBridge {public static void sendDutyMail(String email,String name,String duty){String url=System.getenv().getOrDefault("HOSPITAL_PHP_URL","http://localhost/smart-hospital-php/notify.php");try{HttpURLConnection c=(HttpURLConnection)new URL(url).openConnection();c.setRequestMethod("POST");c.setDoOutput(true);c.setRequestProperty("Content-Type","application/x-www-form-urlencoded");String body="email="+URLEncoder.encode(email,"UTF-8")+"&name="+URLEncoder.encode(name,"UTF-8")+"&message="+URLEncoder.encode("Duty assigned: "+duty,"UTF-8");try(OutputStream o=c.getOutputStream()){o.write(body.getBytes(StandardCharsets.UTF_8));}c.getResponseCode();c.disconnect();}catch(Exception ignored){/* Supporting service may be offline during development. Core assignment remains available. */}}
+}

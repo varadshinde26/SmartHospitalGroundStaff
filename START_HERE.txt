@@ -1,0 +1,64 @@
+SMART HOSPITAL GROUND STAFF — UPDATED START GUIDE
+
+ARCHITECTURE
+JSP + HTML/CSS/JavaScript/AJAX -> Java Servlet -> JDBC -> MySQL
+PHP is used only as a supporting service for the existing notification/email integration.
+Tomcat 9 / javax.servlet is required.
+
+ROLE MODEL
+ADMIN
+  -> manages supervisors
+  -> manages all ground staff
+  -> creates hospital-wide duties
+  -> reviews staff work proof
+
+SUPERVISOR
+  -> ADMIN assigns department(s)
+  -> sees only assigned department staff/duties
+  -> cannot add staff
+  -> creates/allocates duties only in assigned department(s)
+  -> reviews staff work proof only
+
+STAFF
+  -> sees own duties
+  -> acknowledges and starts work
+  -> uploads work proof for assigned duties
+  -> manager verifies proof to close the work
+
+IMPORTANT DOCUMENT RULE
+Only STAFF has the upload control.
+ADMIN and SUPERVISOR have review/download/Work done/Reject controls only.
+
+DEMO ACCOUNTS
+admin / admin@123
+supervisor / supervisor@123    (seeded as ICU Supervisor)
+staff101 / staff@123           (Rahul Patil, ICU Attendant)
+Ramesh Patil / STF-104          (ICU Attendant; seeded for the ICU demo duty; no login account)
+
+DATABASE
+1. Start XAMPP MySQL.
+2. Open http://localhost/phpmyadmin
+3. Run sql/schema.sql against the smart_hospital database.
+4. Restart Tomcat after rebuilding so AppBootstrap can create demo users and seed the ICU supervisor mapping.
+
+BUILD
+1. Ensure JAVA_HOME points to JDK 21.
+2. Put mysql-connector-j-9.4.0.jar in lib/ OR let build.bat download it.
+3. Run build.bat.
+4. Copy build\smart-hospital-ground-staff.war to Tomcat 9 webapps.
+5. Start Tomcat.
+6. Open http://localhost:8080/smart-hospital-ground-staff/
+
+IF MYSQL CONNECTOR IS MISSING
+The application will fail to initialize with ClassNotFoundException: com.mysql.cj.jdbc.Driver.
+Run build.bat with internet access or manually place the real Connector/J 9.4.0 jar in lib/.
+
+
+Ramesh Patil demo staff account:
+Username: ramesh101
+Password: ramesh@123
+Work area: ICU
+Role: ICU Attendant
+Skills seeded for Smart Allocation: Patient Handling, Basic First Aid, ICU Equipment Assistance, Infection Control.
+
+Staff creation: Admin can optionally create a staff login and must select verified skills in the Add Staff form. Required skills are enforced by Smart Allocation. After a supervisor assigns a duty, the assigned staff dashboard and My Duties page read the assignment directly from duty_assignments.
